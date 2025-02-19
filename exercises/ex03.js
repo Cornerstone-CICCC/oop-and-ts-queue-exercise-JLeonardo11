@@ -7,9 +7,15 @@
 const Queue = require('../lib/Queue')
 
 function processReturns(queue) {
-  // your code here
+  const size = queue.size();
+  for (let i = 0; i < size; i++) {
+    const person = queue.dequeue();
+    const totalLateFee = person.books.reduce((sum, book) => sum + book.daysLate * 2, 0);
+    if (totalLateFee > 0) {
+      queue.enqueue(person);
+    }
+  }
 }
-
 const returns = new Queue();
 returns.enqueue({ name: "Alice", books: [{ title: "Book 1", daysLate: 0 }, { title: "Book 2", daysLate: 5 }] });
 returns.enqueue({ name: "Bob", books: [{ title: "Book 3", daysLate: 0 }] });
